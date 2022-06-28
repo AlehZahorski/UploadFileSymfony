@@ -1,0 +1,3 @@
+framework:
+    mailer:
+        dsn: "smtp://user:pass@localhost?encryption=ssl&stream_options[ssl][verify_peer]=false&stream_options[ssl][verify_peer_name]=false&stream_options[ssl][allow_self_signed]=true"

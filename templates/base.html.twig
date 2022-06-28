@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Hosting zdjęć - {% endblock %}</title>
+    {% block stylesheets %}
+        <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/css/simpleLightbox.min.css') }}">
+    {% endblock %}
+</head>
+<body>
+<!--NAV-->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container">
+        <a class="navbar-brand" href="{{ path('app_home') }}">Uploader</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarColor02">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item {% if app.request.get('_route') == 'app_home' %}active{% endif %}">
+                    <a class="nav-link" href="{{ path('app_home') }}">Strona główna</a>
+                </li>
+                <li class="nav-item {% if app.request.get('_route') == 'app_latest_photos' %}active{% endif %}">
+                    <a class="nav-link" href="{{ path('app_latest_photos') }}">Najnowsze</a>
+                </li>
+                {% if app.user %}
+                <li class="nav-item {% if app.request.get('_route') == 'app_my_photos' %}active{% endif %}">
+                    <a class="nav-link" href="{{ path('app_my_photos') }}">Moje zdjęcia</a>
+                </li>
+                {% endif %}
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Moje zdjęcia</a>
+                </li>
+                {% if app.user %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_logout') }}">Wyloguj się</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_login') }}">Zaloguj się</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_register') }}">Zarejestruj się</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!--CONTENT-->
+{% block body %}
+
+{% endblock %}
+
+<!--FOOTER-->
+<footer>
+    <div class="pt-3 pb-3 bg-secondary">
+        <span class="d-block text-center text-white">Uploader, 2022(c)</span>
+    </div>
+</footer>
+
+{% block javascripts %}
+    <script src="{{ asset('assets/js/jquery-3.4.1.slim.min.js') }}"></script>
+    <script src="{{ asset('assets/js/popper.min.js') }}"></script>
+    <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('assets/js/simpleLightbox.min.js') }}"></script>
+    <script src="{{ asset('assets/js/scripts.js') }}"></script>
+{% endblock %}
+</body>
+</html>

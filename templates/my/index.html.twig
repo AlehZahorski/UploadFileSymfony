@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ parent() }}Moje zdjęcia!
+{% endblock %}
+
+{% block body %}
+    <div class="container mt-5 mb-4">
+        <h1 class="mt-5 mb-4 font-weight-normal h4">Moje zdjęcia</h1>
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
+        {% for message in app.flashes('error') %}
+            <div class="alert alert-danger">
+                {{ message }}
+            </div>
+        {% endfor %}
+        <div class="mt-5">
+            <div class="row">
+                {% for photo in myPhotos %}
+                    <div class="col-sm-12 col-lg-4">
+                        <div class="card-deck">
+                            <div class="card d-flex justify-content-between">
+                                <div class="imageGallery1">
+                                    <a href="/images/hosting/{{ photo.filename }}"><img src="/images/hosting/{{ photo.filename }}" class="card-img-top" alt=""></a>
+                                </div>
+                                <div class="card-footer">
+                                    <small class="text-muted">Wysłano: {{ photo.uploadedAt|date('d.m.Y H:i:s') }}</small>
+                                    <small class="text-muted">Dodał: {{ photo.user.username }}</small>
+                                    <p>
+                                        <a href="{{ path('app_my_photos_remove', {"id": photo.id}) }}" class="badge badge-danger">Usuń</a>
+                                        {% if(photo.isPublic == '1') %}
+                                            <a href="{{ path('app_my_photos_set_visibility', {"id": photo.id, 'visibility': '0'}) }}" class="badge badge-primary">Ustaw prywatne</a>
+                                        {% else %}
+                                            <a href="{{ path('app_my_photos_set_visibility', {"id": photo.id, 'visibility': '1'}) }}" class="badge badge-success">Ustaw publiczne</a>
+                                        {% endif %}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
